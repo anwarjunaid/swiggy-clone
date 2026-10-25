@@ -1,15 +1,31 @@
+import { useState } from "react";
+
 export default function RestInfo({restData}) {
+    const[isMore,setIsMore] = useState(false);
+   
     return(
         <>
         <div className="w-full flex justify-between mt-6">
-            <div className="w-[70%]">
+            <div className="w-[65%]">
                 <p className="text-lg text-gray-800 mb-1">{restData?.name}</p>
                 <p>₹{(restData?.price ?? restData?.defaultPrice) / 100}</p>
                 <span className="text-green-800 font-bold">{restData?.ratings?.aggregatedRating?.rating} </span>
                 {restData?.ratings?.aggregatedRating?.rating && 
                     <span className="text-gray-600">({restData?.ratings?.aggregatedRating?.ratingCountV2})</span>
                 }
-                <p className="text-gray-600 mt-2">{restData?.description}</p>
+                <div className="text-gray-600 mt-2">
+                    <p className={`text-justify ${!isMore ? "line-clamp-2" : ""}`}>
+                        {restData?.description}
+                    </p>
+
+                    <button
+                        className="text-green-700 font-semibold"
+                        onClick={() => setIsMore(!isMore)}
+                    >
+                        {isMore ? "less" : "more"}
+                    </button>
+                </div>
+                
             </div>
             <div className="w-[20%] relative">
                 <img className="w-39 h-36 object-cover rounded-2xl" src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/${restData?.imageId}`} alt={restData?.name}></img>

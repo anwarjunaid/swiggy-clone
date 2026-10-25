@@ -22,7 +22,7 @@ export default function MenuCard({menuItems}) {
         return(
             <div className="mt-10 flex justify-between w-full">
                 <p className="text-2xl font-bold mb-4">{menuItems?.title} ({menuItems?.itemCards?.length})</p>
-                <button className="text-3xl mr-10" onClick={()=>setIsOpen(!isOpen)}>{isOpen ? '⌃' : '⌵'}</button>
+                <button className="text-3xl mr-10" onClick={()=>setIsOpen(!isOpen)}>{isOpen ? '⌃' : '⌄'}</button>
             </div>
         )
     }
@@ -31,7 +31,7 @@ export default function MenuCard({menuItems}) {
         <div className="w-full mt-10">
             <div className="flex justify-between w-full">
                 <p className="text-2xl font-bold mb-4">{menuItems?.title} ({menuItems?.itemCards?.length})</p>
-                <button className="text-3xl mr-10" onClick={()=>setIsOpen(!isOpen)}>{isOpen ? '⌃' : '⌵'}</button>
+                <button className="text-3xl mr-10" onClick={()=>setIsOpen(!isOpen)}>{isOpen ? '⌃' : '⌄'}</button>
             </div>
             <div>            
                 {
