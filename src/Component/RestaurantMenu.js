@@ -1,9 +1,11 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import MenuCard from "./MenuCard";
+import { Link } from "react-router";
 
 export default function RestaurantMenu() {
     const [RestData, setRestData] = useState([]);
+    const [selected, setSelected] = useState(null);
     const {id} = useParams();
 
     useEffect(() => {
@@ -22,9 +24,21 @@ export default function RestaurantMenu() {
 
     return(
         <div className="w-[48%] mx-auto">
-            {
-                RestData.map((menuItems) => <MenuCard key={menuItems?.card?.card?.title} menuItems={menuItems?.card?.card}></MenuCard>)
-            }
+            <div>
+                <Link to={`/city/Delhi/${id}/search`}>
+                    <p className="mt-20 py-4 text-center rounded-2xl bg-gray-200 text-2xl text-gray-600">Search for dishes</p>
+                </Link>
+            </div>
+            <div className="w-[80%] mt-20">
+                <button className={`text-2xl py-2 px-8 mr-4 border rounded-2xl ${selected === "veg" ? "bg-green-600 text-white" : ""}`} onClick={() => selected==="veg" ? setSelected(null) : setSelected("veg")}>Veg</button>
+                <button className={`text-2xl py-2 px-8 mr-4 border rounded-2xl ${selected === "non-veg" ? "bg-red-700 text-white" : ""}`} onClick={() => selected==="non-veg" ? setSelected(null) : setSelected("non-veg")}>Non-Veg</button>
+            </div>
+            <div className="h-0.5 mt-10 bg-gray-200"></div>
+            <div>
+                {
+                    RestData.map((menuItems) => <MenuCard key={menuItems?.card?.card?.title} menuItems={menuItems?.card?.card} foodSelected={selected}></MenuCard>)
+                }
+            </div>
         </div>
         
     )
