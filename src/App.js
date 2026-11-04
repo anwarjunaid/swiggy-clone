@@ -1,25 +1,30 @@
 import ReactDom from "react-dom/client";
-import Header from "./Component/Header";
-import FoodOption from "./Component/FoodOption";
-import GroceryOption from "./Component/GroceryOption";
-import DineOption from "./Component/DineOption";
 import Restaurant from "./Component/Restaurant";
 import {BrowserRouter, Routes, Route} from "react-router";
 import Home from "./Component/Home";
 import RestaurantMenu from "./Component/RestaurantMenu";
 import SearchFood from "./Component/SearchFood";
+import SecondaryHome from "./Component/SecondaryHome";
+import { Provider } from "react-redux";
+import { store } from "./Stores/stores";
+import Checkout from "./Component/Checkout";
 
 function App(){
     return(
         <>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/restaurants" element={<Restaurant/>} />
-                    <Route path="/city/Delhi/:id" element={<RestaurantMenu/>} />
-                    <Route path="/city/Delhi/:id/search" element={<SearchFood/>} />
-                </Routes>
-            </BrowserRouter>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/checkout" element={<Checkout/>} />
+                        <Route element={<SecondaryHome/>}>
+                            <Route path="/restaurants" element={<Restaurant/>} />
+                            <Route path="/city/Delhi/:id" element={<RestaurantMenu/>} />
+                            <Route path="/city/Delhi/:id/search" element={<SearchFood/>} />
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+            </Provider>
         </>
     )
 }

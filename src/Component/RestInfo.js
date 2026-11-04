@@ -1,7 +1,28 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {addItem,increaseItem,decreaseItem} from "../Stores/CartSlicer";
 
 export default function RestInfo({restData}) {
     const[isMore,setIsMore] = useState(false);
+    const dispatch = useDispatch();
+
+    const items = useSelector(state => state.CartSlice.items);
+    const element = items.find(item => item.id === restData.id);
+    const count = element ? element.quantity : 0; 
+
+    function handleAddItem(){
+        dispatch(addItem(restData));
+    }
+
+    function handleIncreaseItem(){
+        dispatch(increaseItem(restData));
+    }
+
+    function handleDecreaseItem(){
+        dispatch(decreaseItem(restData));
+    }
+
+    
    
     return(
         <>
@@ -30,7 +51,23 @@ export default function RestInfo({restData}) {
             
             <div className="w-[20%] relative">
                 <img className="w-39 h-36 object-cover rounded-2xl" src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/${restData?.imageId}`} alt={restData?.name}></img>
-                <button className="absolute top-28 left-5 bg-white text-green-700 w-30 h-10 shadow-md rounded-lg mt-2 ">Add</button>
+                
+                
+                
+                {/* <button className="absolute top-28 left-5 bg-white text-green-700 w-30 h-10 shadow-md rounded-lg mt-2 ">Add</button> */}
+                
+                {count === 0 ? (
+                    <button className="absolute top-28 left-5 bg-white text-green-700 w-30 h-10 shadow-md rounded-lg mt-2" onClick={handleAddItem}>Add</button>
+                ) : (
+                    <div className="absolute top-28 left-5 bg-white text-green-700 w-30 h-10 shadow-md rounded-lg mt-2 flex justify-around items-center">
+                        <button className="text-lg font-bold" onClick={handleDecreaseItem}>−</button>
+                        <p className="text-lg font-bold">{count}</p>
+                        <button className="text-2xl font-bold" onClick={handleIncreaseItem}>+</button>
+                    </div>
+                )}
+                
+                
+                
                 <p className="text-gray-500 text-sm absolute top-41 left-10">Customizable</p>
             </div>
         </div>
